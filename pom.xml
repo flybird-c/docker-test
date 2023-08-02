@@ -50,4 +50,16 @@
         </dependency>
 
     </dependencies>
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <!-- 打包时将主入口类添加到清单属性 -->
+            <configuration>
+                <mainClass>org.example.lzp.Main</mainClass>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
 </project>
