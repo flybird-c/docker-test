@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author : lzp
@@ -9,8 +11,14 @@ import java.util.List;
 public class LeeCode {
     public static void main(String[] args) {
         Solution solution = new Solution();
-        int[][] merge = solution.merge(new int[][]{new int[]{1, 3}, new int[]{2, 6}, new int[]{8, 10}, new int[]{15, 18}});
-        for (int[] ints : merge) {
+        int[][] matrix = {
+                new int[]{1, 2, 3, 4},
+                new int[]{5, 0, 7, 8},
+                new int[]{9, 10, 11, 12},
+                new int[]{13, 14, 15, 0}
+        };
+        solution.setZeroes(matrix);
+        for (int[] ints : matrix) {
             for (int anInt : ints) {
                 System.out.printf(anInt + " ");
             }
@@ -20,38 +28,23 @@ public class LeeCode {
 }
 
 class Solution {
-    public int[][] merge(int[][] intervals) {
-        List<int[]> targetList = new ArrayList<>();
-        for (int i = 0; i < intervals.length; i++) {
-            int[] one = intervals[i];
-            int mix = one[0];
-            int max = one[1];
-            if (max==0&&mix==0){
-                continue;
-            }
-            for (int j = i + 1; j < intervals.length; j++) {
-                int[] two = intervals[j];
-                boolean flag=false;
-                if (one[1] >= two[0] && (one[1] < two[1])) {
-                    max=two[1];
-                    flag=true;
-                }
-              if (two[1] >= one[0] && (two[1] < one[1])) {
-                    mix=one[1];
-                    flag=true;
-                }
-                if (flag) {
-                    two[0]=0;
-                    two[1]=0;
+    public void setZeroes(int[][] matrix) {
+        boolean[] row = new boolean[matrix.length];
+        boolean[] column = new boolean[matrix[0].length];
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                if (matrix[i][j]==0) {
+                    row[i]=true;
+                    column[j]=true;
                 }
             }
-            int[] tar=new int[]{mix,max};
-            targetList.add(tar);
         }
-        int[][] tarArray=new int[targetList.size()][2];
-        for (int i = 0; i < targetList.size(); i++) {
-            tarArray[i]=targetList.get(i);
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                if (row[i]||column[j]){
+                    matrix[i][j]=0;
+                }
+            }
         }
-        return tarArray;
     }
 }
