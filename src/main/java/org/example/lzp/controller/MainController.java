@@ -21,6 +21,7 @@ public class MainController {
     public void print(String str){
         String count = redisTemplate.opsForValue().get("count");
         System.out.println(LocalDateTime.now()+" this is param:"+str);
+
         if (StringUtils.isEmpty(count)) {
             redisTemplate.opsForValue().set("count","1");
         }else {
